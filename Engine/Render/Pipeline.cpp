@@ -6,7 +6,7 @@ using namespace Engine::Render;
 
 void Pipeline::Compose(PHandlerWindow pHandlerWindow, const Point& size)
 {
-    size_ = size;
+    hwnd_ = pHandlerWindow; 
     viewport_.Width = static_cast<float>(size.x);
     viewport_.Height = static_cast<float>(size.y);
     viewport_.TopLeftX = 0;
@@ -16,7 +16,6 @@ void Pipeline::Compose(PHandlerWindow pHandlerWindow, const Point& size)
     ComposeDeviceAndSwapChain(pHandlerWindow);
     ComposeRenderTargetView();
 }
-
 void Pipeline::Render(float delta) const
 {
     pDeviceContext_->ClearState();

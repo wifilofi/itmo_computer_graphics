@@ -13,8 +13,6 @@ int main()
 
     auto* stick1 = new Pong::StickPlayer();
     stick1->Compose(float2(-0.9f, 0), float2(0.01f, 0.2f), Pong::Side::Left, 1, game->GetInputDevice());
-    //auto* stick2 = new Pong::StickPlayer();
-    //stick2->Compose(float2(0.9f, 0), float2(0.01f, 0.2f), Pong::Side::Right, 1, game->GetInputDevice());
     auto* stick2 = new Pong::StickAI();
     stick2->Compose(float2(0.9f, 0), float2(0.01f, 0.2f), Pong::Side::Right, 1, ball);
 
@@ -26,15 +24,22 @@ int main()
     wallLeft->Compose(float2(-2.1f, 0), float2(1, 2));
     auto* wallRight = new Pong::Wall();
     wallRight->Compose(float2(2.1f, 0), float2(1, 2));
+
     auto* counter = new Pong::Counter();
-    counter->Compose(wallLeft, wallRight);
+    counter->Compose(wallLeft, wallRight); 
+
     game->Compose(L"Game", 0.01f);
+
+    game->GetRenderPipeline()->Add(counter);
     game->GetRenderPipeline()->Add(stick1);
     game->GetRenderPipeline()->Add(stick2);
     game->GetRenderPipeline()->Add(ball);
+    game->GetRenderPipeline()->Add(counter); 
+
     game->GetFixedUpdate()->Add(stick1);
     game->GetFixedUpdate()->Add(stick2);
     game->GetFixedUpdate()->Add(ball);
+
     game->GetPhysicsCollide()->Add(stick1);
     game->GetPhysicsCollide()->Add(stick2);
     game->GetPhysicsCollide()->Add(ball);
@@ -42,8 +47,11 @@ int main()
     game->GetPhysicsCollide()->Add(wallDown);
     game->GetPhysicsCollide()->Add(wallLeft);
     game->GetPhysicsCollide()->Add(wallRight);
+
     game->GetPhysicsMove()->Add(stick1);
     game->GetPhysicsMove()->Add(stick2);
     game->GetPhysicsMove()->Add(ball);
+
     game->Run();
+    game->Destroy();
 }
